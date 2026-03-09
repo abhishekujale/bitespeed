@@ -14,6 +14,7 @@
   "routes": [
     { "src": "/identify", "dest": "backend/src/index.ts" },
     { "src": "/health", "dest": "backend/src/index.ts" },
-    { "src": "/(.*)", "dest": "/$1" }
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
