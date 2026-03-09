@@ -21,7 +21,7 @@ export async function identifyContact(
   const { email, phoneNumber } = input;
 
   // Build OR conditions — at least one must be present
-  const orConditions: object[] = [];
+  const orConditions: { email?: string; phoneNumber?: string }[] = [];
   if (email) orConditions.push({ email });
   if (phoneNumber) orConditions.push({ phoneNumber });
 
@@ -59,7 +59,7 @@ export async function identifyContact(
   }
 
   // Fetch all contacts in all matched clusters
-  const allClusterContacts = await prisma.contact.findMany({
+  const allClusterContacts: Contact[] = await prisma.contact.findMany({
     where: {
       OR: [
         { id: { in: Array.from(primaryIds) } },
@@ -95,7 +95,7 @@ export async function identifyContact(
   const demotedContacts = await Promise.all(demotion);
 
   // Also re-point secondaries of demoted primaries to truePrimary
-  const demotedIds = primaries.slice(1).map((p) => p.id);
+  const demotedIds = primaries.slice(1).map((p: Contact) => p.id);
   if (demotedIds.length > 0) {
     await prisma.contact.updateMany({
       where: {
@@ -111,7 +111,7 @@ export async function identifyContact(
 
   // Step 6: Check if the incoming request has new information
   // Rebuild full cluster after demotions
-  const updatedCluster = await prisma.contact.findMany({
+  const updatedCluster: Contact[] = await prisma.contact.findMany({
     where: {
       OR: [{ id: truePrimary.id }, { linkedId: truePrimary.id }],
       deletedAt: null,

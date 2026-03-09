@@ -15,15 +15,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "prisma": "^7.4.2"
+    "pg": "^8.20.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.3.5",
+    "@types/pg": "^8.18.0",
     "nodemon": "^3.1.14",
+    "prisma": "^7.4.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
