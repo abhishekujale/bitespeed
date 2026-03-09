@@ -1,16 +1,19 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
   "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
     {
       "src": "backend/src/index.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "backend/src/index.ts"
-    }
+    { "src": "/identify", "dest": "backend/src/index.ts" },
+    { "src": "/health", "dest": "backend/src/index.ts" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
